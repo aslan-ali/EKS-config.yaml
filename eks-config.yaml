@@ -1,0 +1,30 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: k8s-cluster-push30
+  version: "1.30"
+  region: us-east-2
+
+vpc:
+  subnets:
+    public:
+      us-east-2b: { id: subnet-03727004224c52b17 }
+      us-east-2a: { id: subnet-0fbee4eee65c58904 }
+    private:
+      us-east-2b: { id: subnet-0cbc00dfe5b0de678 }
+      us-east-2a: { id: subnet-0fbee4eee65c58904 }
+managedNodeGroups:
+  - name: worker-group-1-dev
+    instanceType: m5.xlarge
+    desiredCapacity: 2
+    labels: { role: worker-group-1-dev }
+    volumeSize: 50
+    privateNetworking: true
+
+  - name: worker-group-2-prod
+    instanceType: m5.2xlarge
+    desiredCapacity: 3
+    volumeSize: 100
+    labels: { role: worker-group-2-prod }
+    privateNetworking: true
